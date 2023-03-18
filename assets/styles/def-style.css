@@ -1,0 +1,59 @@
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+html {
+    background-color: #001316;
+}
+
+header {
+    color: #FF444E;
+}
+
+
+.row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    justify-items: center;
+}
+
+.text {
+    font-size: 2em;
+    color: #FF444E;
+}
+
+.navlist {
+    list-style: none;
+    display: flex;
+    flex-flow: row nowrap;
+    color: #FF444E;
+}
+
+/* On screens that are 320px or less use: */
+@media screen and (max-width: 320px) {
+    .text {
+        font-size: 1em;
+    }
+}
+
+/* On screens that are 480px or less use: */
+@media screen and (max-width: 480px) {
+    .text {
+        font-size: 1.2em;
+    }
+} 
+
+@media screen and (max-width: 320px) {
+   *, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #001316;
+    }
+
+} 
