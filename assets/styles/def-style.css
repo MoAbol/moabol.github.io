@@ -1,9 +1,28 @@
 *, *::after, *::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     background-color: #001316;
+    box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    padding: 0;
+    margin: 0;
+}
+
+.header { /* <header> is a .header class */
+    color: #FF444E;
+    flex-flow: row wrap;
+    justify-content: space-between;   
+}
+
+.nav-list-item:hover {
+    color: #EFF7D3;
+}
+
+.navlist:visited {
+    color: #FF444E;
+}
+
+li {
+    display: flex;
 }
 
 .row {
@@ -13,32 +32,56 @@
     justify-items: center;
 }
 
-.header { /* <header> is a .header class */
-    color: #FF444E;
-    flex-flow: row wrap;
+.row-1 {
     justify-content: space-between;   
 }
 
+.name-section {
+    display: flex;
+    flex-flow: column nowrap;
+    color: #EFF7D3;
+}
+
+.moh {
+    padding: 0.37em;
+    font-size: 2.5em;
+    font-variant: small-caps;
+}
+
 .nav-list-item {
-    padding: 10px;
+    padding: 1em;
 }
 
 .logobox {
     font-size: 1.2em;
-    padding: 1.2em;
+    padding: 1. gi2em;
 }
 .text {
-    font-size: 2em;
+    padding-top: 2em;
+    font-size: 6em;
     color: #FF444E;
+    text-transform: uppercase;
 }
 
 .navlist {
-    list-style: none;
     display: flex;
-    flex-flow: row nowrap;
     color: #FF444E;
+    flex-flow: row nowrap;
+    font-size: 1.62em;
+    list-style: none;
 }
 
+circle {
+    fill: rgb(42, 35, 145);
+}
+
+svg {
+    width: 80px;
+}
+
+.row-1 {
+    padding: 1.5em;
+}
 /*
 On screens that are 320px or less use: 
 @media screen and (max-width: 321px) {} 
