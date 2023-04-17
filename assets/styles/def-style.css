@@ -54,7 +54,7 @@ li {
 
 .logobox {
     font-size: 1.2em;
-    padding: 1. gi2em;
+    padding: 2em;
 }
 .text {
     padding-top: 2em;
@@ -76,7 +76,7 @@ circle {
 }
 
 svg {
-    width: 80px;
+    width: 4em;
 }
 
 .row-1 {
@@ -84,7 +84,7 @@ svg {
 }
 /*
 On screens that are 320px or less use: 
-@media screen and (max-width: 321px) {} 
+@media screen and (max-width: 320px) {} 
 @media screen and (max-width: 480px) {} 
 @media screen and (max-width: 768px) {} 
 @media screen and (max-width: 1024px) {} 
