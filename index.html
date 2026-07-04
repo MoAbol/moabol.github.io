@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>H3NBUG</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0a0a;
+    --fg: #f5f5f5;
+    --accent: #39ff14;
+    --dim: #6b6b6b;
+  }
+
+  html, body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-mono{ font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- SIDEBAR SCROLL ANIMATION ---------- */
+  .marquee-track{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    white-space: nowrap;
+  }
+
+  @keyframes scrollUp{
+    0%   { transform: translateY(0%); }
+    100% { transform: translateY(-50%); }
+  }
+  @keyframes scrollDown{
+    0%   { transform: translateY(-50%); }
+    100% { transform: translateY(0%); }
+  }
+
+  .anim-up{
+    animation: scrollUp 12s linear infinite;
+  }
+  .anim-down{
+    animation: scrollDown 12s linear infinite;
+  }
+
+  .sidebar-text{
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    font-size: 0.9rem;
+    color: var(--dim);
+    transform: rotate(180deg);
+  }
+
+  /* ---------- MOBILE BOTTOM MARQUEE ---------- */
+  @keyframes scrollLeft{
+    0%   { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-horizontal{
+    display: flex;
+    white-space: nowrap;
+    animation: scrollLeft 15s linear infinite;
+  }
+
+  /* Extreme overlay headline */
+  .overlay-text{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 1.25rem;
+    font-weight: 900;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--fg);
+    text-transform: uppercase;
+    mix-blend-mode: difference;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .grain-image{
+    filter: grayscale(100%) contrast(1.2);
+  }
+
+  .social-link{
+    transition: all .25s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .social-link:hover{
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .glow-text{
+    text-shadow: 0 0 30px rgba(57,255,20,0.25);
+  }
+
+  @media (max-width: 768px){
+    .desktop-sidebar{ display: none; }
+    .desktop-image{ display: none; }
+    .mobile-bottom-bar{ display: flex; }
+  }
+  @media (min-width: 769px){
+    .mobile-bottom-bar{ display: none; }
+  }
+</style>
+</head>
+<body class="w-screen h-screen bg-black">
+
+<div class="w-full h-full flex flex-row">
+
+  <!-- LEFT ANIMATED SIDEBAR (Desktop only) -->
+  <div class="desktop-sidebar w-14 md:w-16 h-full flex items-center justify-center border-r border-white/5 overflow-hidden relative">
+    <div class="marquee-track anim-up">
+      <span class="sidebar-text">LET'S LEARN</span>
+      <span class="sidebar-text">LET'S LEARN</span>
+      <span class="sidebar-text">LET'S LEARN</span>
+      <span class="sidebar-text">LET'S LEARN</span>
+      <span class="sidebar-text">LET'S LEARN</span>
+      <span class="sidebar-text">LET'S LEARN</span>
+    </div>
+  </div>
+
+  <!-- CENTER MAIN CONTENT -->
+  <div class="flex-1 h-full mx-[0.6rem] my-3 flex flex-col md:flex-row gap-3 md:gap-4">
+
+    <!-- LEFT: IMAGE + OVERLAY (Desktop only) -->
+    <div class="desktop-image relative flex-1 rounded-2xl overflow-hidden border border-white/10 bg-neutral-900">
+      <img
+        src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop"
+        alt="tech"
+        class="w-full h-full object-cover grain-image opacity-80"
+      >
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+      <div class="overlay-text">
+        SYSTEMS<br>OVER<br>SECRETS
+      </div>
+    </div>
+
+    <!-- RIGHT: MAIN IDENTITY WORKSPACE -->
+    <div class="flex-[1.4] md:flex-[1.6] h-full rounded-2xl border border-white/10 bg-neutral-950/60 flex flex-col items-center justify-center relative px-6 py-8">
+
+      <!-- top tag -->
+      <div class="absolute top-6 left-6 font-mono text-xs text-neutral-500 tracking-widest">
+        // root@access:~$
+      </div>
+      <div class="absolute top-6 right-6 font-mono text-xs text-neutral-500 tracking-widest">
+        [ ONLINE ]
+      </div>
+
+      <!-- H3NBUG HEADLINE -->
+      <h1 class="glow-text font-black text-center leading-none tracking-tighter text-[clamp(3rem,9vw,7rem)] text-white select-none">
+        H3NBUG
+      </h1>
+      <p class="font-mono text-xs md:text-sm text-neutral-500 mt-3 tracking-[0.3em] uppercase">
+        digital ghost // network breaker
+      </p>
+
+      <!-- SOCIAL LINKS -->
+      <nav class="mt-8 flex flex-col items-center gap-3 md:gap-4">
+        <a href="#" class="social-link font-mono text-sm md:text-base text-neutral-300">
+          → GitHub
+        </a>
+        <a href="#" class="social-link font-mono text-sm md:text-base text-neutral-300">
+          → Telegram
+        </a>
+        <a href="#" class="social-link font-mono text-sm md:text-base text-neutral-300">
+          → YouTube
+        </a>
+        <a href="#" class="social-link font-mono text-sm md:text-base text-neutral-300">
+          → X / Twitter
+        </a>
+      </nav>
+
+      <!-- bottom subtle URL -->
+      <a href="https://h3nbug.dev" target="_blank"
+         class="absolute bottom-5 font-mono text-[10px] md:text-xs text-neutral-600 hover:text-[var(--accent)] transition-colors tracking-wide">
+        h3nbug.dev
+      </a>
+    </div>
+  </div>
+
+  <!-- RIGHT ANIMATED SIDEBAR (Desktop only) -->
+  <div class="desktop-sidebar w-14 md:w-16 h-full flex items-center justify-center border-l border-white/5 overflow-hidden relative">
+    <div class="marquee-track anim-down">
+      <span class="sidebar-text">LET'S LEARN</span>
+      <span class="sidebar-text">LET'S LEARN</span>
+      <span class="sidebar-text">LET'S LEARN</span>
+      <span class="sidebar-text">LET'S LEARN</span>
+      <span class="sidebar-text">LET'S LEARN</span>
+      <span class="sidebar-text">LET'S LEARN</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- MOBILE BOTTOM MARQUEE BAR -->
+<div class="mobile-bottom-bar fixed bottom-0 left-0 w-full h-10 bg-neutral-950 border-t border-white/10 items-center overflow-hidden">
+  <div class="marquee-horizontal font-mono text-xs text-neutral-500 tracking-[0.3em] gap-10 px-4">
+    <span>LET'S LEARN</span><span>•</span>
+    <span>LET'S LEARN</span><span>•</span>
+    <span>LET'S LEARN</span><span>•</span>
+    <span>LET'S LEARN</span><span>•</span>
+    <span>LET'S LEARN</span><span>•</span>
+    <span>LET'S LEARN</span><span>•</span>
+  </div>
+</div>
+
+</body>
+</html>
