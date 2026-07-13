@@ -2,197 +2,310 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>H3NBUG | Absolute Mode</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@900&family=Inter:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-  
+
   <style>
     :root {
       --navy: #050B14;
       --cream: #FFFFD2;
-      --gap: 12px;
-      --ribbon-w: 60px;
+      --gap: clamp(10px, 1.2vw, 14px);
+      --ribbon-w: clamp(48px, 4.2vw, 64px);
+      --radius: 16px;
+      --left-min: 300px;
+      --left-max: 560px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    body {
+    html, body {
+      width: 100%;
+      min-height: 100%;
       background: var(--navy);
       color: var(--navy);
       font-family: 'Inter', sans-serif;
-      height: 100vh;
       overflow: hidden;
     }
 
+    body {
+      position: fixed;
+      inset: 0;
+    }
+
     .stage {
+      position: relative;
+      width: 100vw;
+      height: 100dvh;
       display: grid;
-      grid-template-columns: minmax(320px, 550px) 1fr;
-      height: 100vh;
+      grid-template-columns: minmax(var(--left-min), var(--left-max)) 1fr;
       gap: var(--gap);
       padding: var(--gap);
       padding-right: calc(var(--ribbon-w) + var(--gap));
+      overflow: hidden;
     }
 
     .panel-left {
       background: var(--cream);
-      border-radius: 16px;
-      padding: 80px 60px;
+      border-radius: var(--radius);
+      padding: clamp(28px, 4vw, 80px) clamp(22px, 3vw, 60px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      z-index: 10;
       min-width: 0;
       overflow: hidden;
+      z-index: 10;
+    }
+
+    .brand h2 {
+      font-size: clamp(12px, 1.2vw, 14px);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
     }
 
     .brand h1 {
-      font-family: 'Prompt';
-      font-size: 90px;
-      line-height: 0.8;
-      margin: 15px 0 10px 0;
+      font-family: 'Prompt', sans-serif;
+      font-size: clamp(62px, 7vw, 96px);
+      line-height: 0.82;
+      margin: 10px 0 12px;
       font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .brand p {
+      font-family: 'Fira Code', monospace;
+      opacity: 0.7;
+      font-size: clamp(12px, 1.4vw, 16px);
     }
 
     .menu {
       list-style: none;
-      margin: 40px 0;
+      margin: clamp(24px, 4vw, 40px) 0;
+      display: grid;
+      gap: 12px;
     }
 
     .menu a {
       text-decoration: none;
       color: var(--navy);
       font-family: 'Fira Code', monospace;
-      font-size: 22px;
+      font-size: clamp(16px, 2vw, 22px);
       display: inline-block;
-      transition: 0.2s;
+      transition: transform 0.2s ease;
     }
 
     .menu a:hover {
       transform: translateX(10px);
     }
 
+    .footer-id {
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      letter-spacing: 2px;
+      opacity: 0.75;
+    }
+
     .panel-right-container {
       background: var(--cream);
-      padding: 12px;
-      height: 100%;
-      display: flex;
+      border-radius: var(--radius);
+      padding: var(--gap);
       min-width: 0;
+      min-height: 0;
       overflow: hidden;
+      display: flex;
     }
 
     .inner-frame {
-      flex: 1;
-      background: var(--navy);
-      border-radius: 16px;
       position: relative;
-      overflow: hidden;
+      flex: 1;
       min-width: 0;
       min-height: 0;
+      border-radius: calc(var(--radius) - 2px);
+      overflow: hidden;
+      background: var(--navy);
+      isolation: isolate;
     }
 
     #random-grid {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  opacity: 0.55;
-  pointer-events: none;
-
-  -webkit-mask-image: linear-gradient(
-  135deg,
-  rgba(0,0,0,0) 0%,
-  rgba(0,0,0,0.15) 20%,
-  rgba(0,0,0,0.45) 35%,
-  rgba(0,0,0,0.8) 50%,
-  rgba(0,0,0,1) 65%,
-  rgba(0,0,0,1) 100%
-);
-mask-image: linear-gradient(
-  135deg,
-  rgba(0,0,0,0) 0%,
-  rgba(0,0,0,0.15) 20%,
-  rgba(0,0,0,0.45) 35%,
-  rgba(0,0,0,0.8) 50%,
-  rgba(0,0,0,1) 65%,
-  rgba(0,0,0,1) 100%
-);
-}
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.6;
+      -webkit-mask-image: linear-gradient(
+        135deg,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.08) 18%,
+        rgba(0,0,0,0.35) 32%,
+        rgba(0,0,0,0.8) 48%,
+        rgba(0,0,0,1) 64%,
+        rgba(0,0,0,1) 100%
+      );
+      mask-image: linear-gradient(
+        135deg,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.08) 18%,
+        rgba(0,0,0,0.35) 32%,
+        rgba(0,0,0,0.8) 48%,
+        rgba(0,0,0,1) 64%,
+        rgba(0,0,0,1) 100%
+      );
+    }
 
     .portrait {
       position: absolute;
-      bottom: 0;
       left: 0;
-      height: 94%;
+      bottom: 0;
+      height: 96%;
       width: auto;
       max-width: none;
-      z-index: 5; /* لایه بالاتر از گرید */
+      z-index: 5;
       pointer-events: none;
+      user-select: none;
 
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 95%);
-      mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,0) 94%);
+      -webkit-mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,1) 16%,
+        rgba(0,0,0,0.92) 30%,
+        rgba(0,0,0,0.55) 62%,
+        rgba(0,0,0,0) 100%
+      );
+      mask-image: linear-gradient(
+        to top,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,1) 16%,
+        rgba(0,0,0,0.92) 30%,
+        rgba(0,0,0,0.55) 62%,
+        rgba(0,0,0,0) 100%
+      );
     }
+
     .ribbon {
       position: fixed;
       top: 0;
       right: 0;
-      bottom: 0;
       width: var(--ribbon-w);
+      height: 100dvh;
       background: var(--cream);
       overflow: hidden;
       z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .ribbon-wrapper {
+    .ribbon-track {
       display: flex;
       flex-direction: column;
       will-change: transform;
     }
 
     .ribbon-text {
-  font-family: 'Prompt';
-  font-size: 97px;
-  font-weight: 900;
-  writing-mode: vertical-rl;
-  white-space: nowrap;
-  padding: 0;
-  padding-left: 78px;
-  line-height: 1;
-  }
+      font-family: 'Prompt', sans-serif;
+      font-size: clamp(64px, 7vw, 98px);
+      font-weight: 900;
+      writing-mode: vertical-rl;
+      white-space: nowrap;
+      line-height: 1;
+      padding-left: 0px;
+      letter-spacing: -0.03em;
+    }
 
     @media (max-width: 960px) {
+      body {
+        position: fixed;
+        inset: 0;
+      }
+
       .stage {
         grid-template-columns: 1fr;
-        height: auto;
-        overflow-y: auto;
+        grid-template-rows: auto 1fr;
+        padding-right: var(--gap);
+        padding-bottom: calc(var(--ribbon-w) + var(--gap));
+      }
+
+      .panel-left {
+        min-height: 0;
+      }
+
+      .panel-right-container {
+        min-height: 0;
       }
 
       .ribbon {
         top: auto;
         left: 0;
+        right: 0;
         bottom: 0;
         width: 100%;
         height: var(--ribbon-w);
       }
 
-      .ribbon-wrapper {
+      .ribbon-track {
         flex-direction: row;
       }
 
       .ribbon-text {
         writing-mode: horizontal-tb;
-        padding: 0 30px;
+        padding-left: 0;
+        padding: 0 28px;
+        font-size: clamp(24px, 6vw, 36px);
+      }
+
+      .portrait {
+        height: 100%;
+        max-height: none;
+        left: 50%;
+        transform: translateX(-50%);
+        object-fit: cover;
+        object-position: left bottom;
+      }
+
+      .menu {
+        margin: 18px 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stage {
+        padding: 8px;
+        padding-bottom: calc(var(--ribbon-w) + 8px);
+        gap: 8px;
+      }
+
+      .panel-left {
+        padding: 20px 18px;
+      }
+
+      .brand h1 {
+        font-size: clamp(52px, 16vw, 72px);
+      }
+
+      .portrait {
+        height: 100%;
+        left: 0;
+        transform: none;
+        object-position: left bottom;
       }
     }
   </style>
 </head>
 <body>
-
   <div class="stage">
     <aside class="panel-left">
       <div class="brand">
-        <h2 style="font-size: 14px; letter-spacing: 2px;">MOHAMMAD ABOLHASANI</h2>
+        <h2>MOHAMMAD ABOLHASANI</h2>
         <h1>H3NBUG</h1>
-        <p style="font-family: 'Fira Code'; opacity: 0.7;">Chaos with purpose.</p>
+        <p>Chaos with purpose.</p>
       </div>
 
       <ul class="menu">
@@ -213,46 +326,24 @@ mask-image: linear-gradient(
   </div>
 
   <aside class="ribbon">
-    <div class="ribbon-wrapper" id="ribbon-animate">
-      <div class="ribbon-text">WATCH&LEARN&nbsp;</div>
-      <div class="ribbon-text">WATCH&LEARN&nbsp;</div>
-      <div class="ribbon-text">WATCH&LEARN&nbsp;</div>
-      <div class="ribbon-text">WATCH&LEARN&nbsp;</div>
+    <div class="ribbon-track" id="ribbon-track">
+      <div class="ribbon-text">WATCH&LEARN</div>
+      <div class="ribbon-text">WATCH&LEARN</div>
+      <div class="ribbon-text">WATCH&LEARN</div>
+      <div class="ribbon-text">WATCH&LEARN</div>
     </div>
   </aside>
 
   <script>
-    // =========================
-    // 1) RANDOM GRID + MOUSE INTERACTION
-    // =========================
+    // ===== GRID =====
     const canvas = document.getElementById('random-grid');
     const ctx = canvas.getContext('2d');
     const frame = document.getElementById('interactive-frame');
 
-    let mouse = {
-      x: -9999,
-      y: -9999,
-      active: false
-    };
-
     let cols = [];
     let rows = [];
+    let mouse = { x: -9999, y: -9999, active: false };
     let rafPending = false;
-
-    function resizeCanvas() {
-      const dpr = window.devicePixelRatio || 1;
-      const rect = frame.getBoundingClientRect();
-
-      canvas.width = Math.floor(rect.width * dpr);
-      canvas.height = Math.floor(rect.height * dpr);
-      canvas.style.width = rect.width + 'px';
-      canvas.style.height = rect.height + 'px';
-
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      buildGrid(rect.width, rect.height);
-      drawGrid();
-    }
 
     function randomStep(min, max) {
       return Math.random() * (max - min) + min;
@@ -281,6 +372,21 @@ mask-image: linear-gradient(
         });
         y += randomStep(38, 72);
       }
+    }
+
+    function resizeCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = frame.getBoundingClientRect();
+
+      canvas.width = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(rect.height * dpr);
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      buildGrid(rect.width, rect.height);
+      drawGrid();
     }
 
     function drawGrid() {
@@ -319,7 +425,7 @@ mask-image: linear-gradient(
       }
     }
 
-    function requestGridDraw() {
+    function scheduleDraw() {
       if (rafPending) return;
       rafPending = true;
       requestAnimationFrame(() => {
@@ -333,38 +439,43 @@ mask-image: linear-gradient(
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
       mouse.active = true;
-      requestGridDraw();
+      scheduleDraw();
     });
 
     frame.addEventListener('mouseleave', () => {
       mouse.x = -9999;
       mouse.y = -9999;
       mouse.active = false;
-      requestGridDraw();
+      scheduleDraw();
     });
 
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // =========================
-    // 2) RIBBON ANIMATION WITH FIXED SPEED
-    // =========================
-    const wrapper = document.getElementById('ribbon-animate');
-    wrapper.innerHTML += wrapper.innerHTML;
+    // ===== RIBBON =====
+    const track = document.getElementById('ribbon-track');
+    track.innerHTML += track.innerHTML;
 
-    const isMobile = window.innerWidth <= 960;
-    const distance = isMobile ? (wrapper.scrollWidth / 2) : (wrapper.scrollHeight / 2);
-    const pixelsPerSecond = 63;
-    const dynamicDuration = (distance / pixelsPerSecond) * 1000;
+    function startRibbon() {
+      anime.remove(track);
 
-    anime({
-      targets: '#ribbon-animate',
-      translateY: isMobile ? [0, '-50%'] : [0, '-50%'],
-      translateX: isMobile ? [0, '-50%'] : 0,
-      duration: dynamicDuration,
-      easing: 'linear',
-      loop: true
-    });
+      const isMobile = window.innerWidth <= 960;
+      const distance = isMobile ? track.scrollWidth / 2 : track.scrollHeight / 2;
+      const pixelsPerSecond = 60;
+      const duration = (distance / pixelsPerSecond) * 1000;
+
+      anime({
+        targets: track,
+        translateY: isMobile ? 0 : [0, '-50%'],
+        translateX: isMobile ? [0, '-50%'] : 0,
+        duration,
+        easing: 'linear',
+        loop: true
+      });
+    }
+
+    startRibbon();
+    window.addEventListener('resize', startRibbon);
   </script>
 </body>
 </html>
