@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>H3NBUG | Absolute Mode</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@900&family=Inter:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght=0,14..32,100..900;1,14..32,100..900&family=PT+Sans+Narrow:wght@400;700&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
 
   <style>
     :root {
-      --navy: #050B14;
-      --cream: #FFFFD2;
+      --navy: #050b14;
+      --cream: #fbffc4;
       --gap: clamp(10px, 1.2vw, 14px);
       --ribbon-w: clamp(48px, 4.2vw, 64px);
       --radius: 16px;
@@ -19,97 +20,54 @@
       --left-max: 560px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
       width: 100%;
       min-height: 100%;
       background: var(--navy);
       color: var(--navy);
-      font-family: 'Inter', sans-serif;
+      font-family: "Inter", sans-serif;
       overflow: hidden;
     }
 
-    body {
-      position: fixed;
-      inset: 0;
-    }
+    body { position: fixed; inset: 0; }
 
     .stage {
       position: relative;
       width: 100vw;
       height: 100dvh;
       display: grid;
-      grid-template-columns: minmax(var(--left-min), var(--left-max)) 1fr;
-      gap: var(--gap);
-      padding: var(--gap);
-      padding-right: calc(var(--ribbon-w) + var(--gap));
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      gap: 8px;
+      padding: 8px;
+      padding-bottom: calc(var(--ribbon-w) + 8px);
       overflow: hidden;
     }
 
     .panel-left {
       background: var(--cream);
       border-radius: var(--radius);
-      padding: clamp(28px, 4vw, 80px) clamp(22px, 3vw, 60px);
+      padding: 20px 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       min-width: 0;
+      min-height: 0;
       overflow: hidden;
       z-index: 10;
     }
 
-    .brand h2 {
-      font-size: clamp(12px, 1.2vw, 14px);
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-    }
+    .brand h2 { font-size: clamp(12px, 1.2vw, 14px); letter-spacing: 2px; margin-bottom: 10px; font-weight: 200; }
+    .brand h1 { font-family: "Prompt", sans-serif; font-size: clamp(52px, 16vw, 72px); line-height: 0.82; margin: 10px 0 12px; font-weight: 900; letter-spacing: -0.03em; }
+    .brand p { font-family: "Fira Code", monospace; opacity: 0.7; font-size: clamp(12px, 1.4vw, 16px); }
 
-    .brand h1 {
-      font-family: 'Prompt', sans-serif;
-      font-size: clamp(62px, 7vw, 96px);
-      line-height: 0.82;
-      margin: 10px 0 12px;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-    }
+    .menu { list-style: none; margin: 18px 0; display: grid; gap: 12px; }
+    .menu a { text-decoration: none; color: var(--navy); font-family: "Fira Code", monospace; font-size: clamp(16px, 2vw, 22px); display: inline-block; transition: transform 0.2s ease; }
+    .menu a:hover { transform: translateX(10px); }
 
-    .brand p {
-      font-family: 'Fira Code', monospace;
-      opacity: 0.7;
-      font-size: clamp(12px, 1.4vw, 16px);
-    }
-
-    .menu {
-      list-style: none;
-      margin: clamp(24px, 4vw, 40px) 0;
-      display: grid;
-      gap: 12px;
-    }
-
-    .menu a {
-      text-decoration: none;
-      color: var(--navy);
-      font-family: 'Fira Code', monospace;
-      font-size: clamp(16px, 2vw, 22px);
-      display: inline-block;
-      transition: transform 0.2s ease;
-    }
-
-    .menu a:hover {
-      transform: translateX(10px);
-    }
-
-    .footer-id {
-      font-family: 'Fira Code', monospace;
-      font-size: 12px;
-      letter-spacing: 2px;
-      opacity: 0.75;
-    }
+    .footer-id { font-family: "Fira Code", monospace; font-size: 12px; letter-spacing: 2px; opacity: 0.75; }
 
     .panel-right-container {
       background: var(--cream);
@@ -130,6 +88,8 @@
       overflow: hidden;
       background: var(--navy);
       isolation: isolate;
+      display: grid;
+      container-type: size;
     }
 
     #random-grid {
@@ -140,172 +100,94 @@
       z-index: 1;
       pointer-events: none;
       opacity: 0.6;
-      -webkit-mask-image: linear-gradient(
-        135deg,
-        rgba(0,0,0,0) 0%,
-        rgba(0,0,0,0.08) 18%,
-        rgba(0,0,0,0.35) 32%,
-        rgba(0,0,0,0.8) 48%,
-        rgba(0,0,0,1) 64%,
-        rgba(0,0,0,1) 100%
-      );
-      mask-image: linear-gradient(
-        135deg,
-        rgba(0,0,0,0) 0%,
-        rgba(0,0,0,0.08) 18%,
-        rgba(0,0,0,0.35) 32%,
-        rgba(0,0,0,0.8) 48%,
-        rgba(0,0,0,1) 64%,
-        rgba(0,0,0,1) 100%
-      );
+      -webkit-mask-image: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.08) 18%, rgba(0,0,0,0.35) 32%, rgba(0,0,0,0.8) 48%, black 64%, black 100%);
+      mask-image: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.08) 18%, rgba(0,0,0,0.35) 32%, rgba(0,0,0,0.8) 48%, black 64%, black 100%);
     }
 
     .portrait {
       position: absolute;
       left: 0;
       bottom: 0;
-      height: 96%;
       width: auto;
-      max-width: none;
+      height: 100%;
       z-index: 5;
       pointer-events: none;
       user-select: none;
-
-      -webkit-mask-image: linear-gradient(
-        to top,
-        rgba(0,0,0,1) 0%,
-        rgba(0,0,0,1) 16%,
-        rgba(0,0,0,0.92) 30%,
-        rgba(0,0,0,0.55) 62%,
-        rgba(0,0,0,0) 100%
-      );
-      mask-image: linear-gradient(
-        to top,
-        rgba(0,0,0,1) 0%,
-        rgba(0,0,0,1) 16%,
-        rgba(0,0,0,0.92) 30%,
-        rgba(0,0,0,0.55) 62%,
-        rgba(0,0,0,0) 100%
-      );
+      object-fit: cover;
+      object-position: left bottom;
+      -webkit-mask-image: linear-gradient(to top, black 0%, black 16%, rgba(0,0,0,0.92) 30%, rgba(0,0,0,0.55) 62%, transparent 100%);
+      mask-image: linear-gradient(to top, black 0%, black 16%, rgba(0,0,0,0.92) 30%, rgba(0,0,0,0.55) 62%, transparent 100%);
     }
+
+    .watermark {
+      position: absolute;
+      right: clamp(12px, 3vw, 48px);
+      bottom: clamp(12px, 3vw, 48px);
+      z-index: 6;
+      pointer-events: none;
+      color: var(--cream);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
+      font-weight: 100;
+      line-height: 0.82;
+      letter-spacing: -0.04em;
+      font-size: clamp(2rem, 10cqw, 9rem);
+      max-width: 85%;
+      text-align: right;
+    }
+
+    .watermark span { display: block; white-space: nowrap; font-family: "PT Sans Narrow", sans-serif; }
 
     .ribbon {
       position: fixed;
-      top: 0;
-      right: 0;
-      width: var(--ribbon-w);
-      height: 100dvh;
+      inset: auto 0 0 0;
+      width: 100%;
+      height: var(--ribbon-w);
       background: var(--cream);
       overflow: hidden;
       z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .ribbon-track {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      width: max-content;
+      height: 100%;
       will-change: transform;
     }
 
     .ribbon-text {
-      font-family: 'Prompt', sans-serif;
-      font-size: clamp(64px, 7vw, 180px);
+      font-family: "Prompt", sans-serif;
+      font-size: clamp(72px, 6vw, 36px);
       font-weight: 900;
-      writing-mode: vertical-rl;
       white-space: nowrap;
-      line-height: 1;
-      padding-left: 0px;
-      letter-spacing: -0.03em;
+      letter-spacing: 0.014em;
+      display: flex;
+      align-items: center;
     }
 
-    @media (max-width: 960px) {
-      body {
-        position: fixed;
-        inset: 0;
-      }
+    @media (min-width: 641px) {
+      .stage { gap: var(--gap); padding: var(--gap); padding-bottom: calc(var(--ribbon-w) + var(--gap)); }
+      .panel-left { padding: clamp(28px, 4vw, 80px) clamp(22px, 3vw, 60px); }
+      .brand h1 { font-size: clamp(62px, 10vw, 96px); }
+    }
 
+    @media (min-width: 961px) {
       .stage {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
-        padding-right: var(--gap);
-        padding-bottom: calc(var(--ribbon-w) + var(--gap));
+        grid-template-columns: minmax(var(--left-min), var(--left-max)) 1fr;
+        grid-template-rows: 1fr;
+        padding-right: calc(var(--ribbon-w) + var(--gap));
+        padding-bottom: var(--gap);
       }
-
-      .panel-left {
-        min-height: 0;
-      }
-
-      .panel-right-container {
-        min-height: 0;
-      }
-
-      .portrait {
-      height: 9%;
-      width: auto;
-      max-width: none;
-      left: 0;         
-       
-      transform: none;
-      object-fit: contain; 
-      object-position: left bottom;  
-      }
-    
-    .ribbon {
-        top: auto;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        height: var(--ribbon-w);
-      }
-
-      .ribbon-track {
-        flex-direction: row;
-      }
-
+      .portrait { height: 96%; }
+      .ribbon { inset: 0 0 0 auto; width: var(--ribbon-w); height: 100dvh; }
+      .ribbon-track { flex-direction: column; width: 100%; height: max-content; }
       .ribbon-text {
-        writing-mode: horizontal-tb;
-        padding-left: 0;
-        padding: 0 28px;
-        font-size: clamp(24px, 6vw, 36px);
-      }
-
-      .portrait {
-        height: 100%;
-        max-height: none;
-        left: 0;
-        bottom: 0; 
-        object-fit: cover;
-        object-position: left bottom;
-      }
-
-      .menu {
-        margin: 18px 0;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .stage {
-        padding: 8px;
-        padding-bottom: calc(var(--ribbon-w) + 8px);
-        gap: 8px;
-      }
-
-      .panel-left {
-        padding: 20px 18px;
-      }
-
-      .brand h1 {
-        font-size: clamp(52px, 16vw, 72px);
-      }
-
-      .portrait {
-        height: 100%;
-        left: 0;
-        transform: none;
-        object-position: left bottom;
+        font-size: clamp(96px, 4vw, 42px);
+        writing-mode: vertical-rl;
+        justify-content: center;
       }
     }
   </style>
@@ -316,177 +198,152 @@
       <div class="brand">
         <h2>MOHAMMAD ABOLHASANI</h2>
         <h1>H3NBUG</h1>
-        <p>Chaos with purpose.</p>
+        <p>Win battles by learning the chaos.</p>
       </div>
-
       <ul class="menu">
-        <li><a href="https://github.com/moabol" target="_blank">→ GitHub</a></li>
+        <li><a href="https://github.com/moabol" target="_blank" rel="noreferrer">→ GitHub</a></li>
         <li><a href="#">→ YouTube</a></li>
         <li><a href="#">→ LinkedIn</a></li>
       </ul>
-
       <div class="footer-id">MABOL.XYZ</div>
     </aside>
 
     <main class="panel-right-container">
       <div class="inner-frame" id="interactive-frame">
+        <div class="watermark"><span>I MADE IT.</span></div>
         <canvas id="random-grid"></canvas>
-        <img src="GHpage_001.png" class="portrait" alt="H3NBUG">
+        <img src="./GHpage_001.png" class="portrait" alt="H3NBUG" />
       </div>
     </main>
   </div>
 
   <aside class="ribbon">
     <div class="ribbon-track" id="ribbon-track">
-      <div class="ribbon-text">WATCH&LEARN</div>
-      <div class="ribbon-text">WATCH&LEARN</div>
-      <div class="ribbon-text">WATCH&LEARN</div>
-      <div class="ribbon-text">WATCH&LEARN</div>
+      <div class="ribbon-text">WATCH&amp;LEARN</div>
+      <div class="ribbon-text">WATCH&amp;LEARN</div>
     </div>
   </aside>
 
   <script>
-    // ===== GRID =====
-    const canvas = document.getElementById('random-grid');
-    const ctx = canvas.getContext('2d');
-    const frame = document.getElementById('interactive-frame');
+    (() => {
+      "use strict";
 
-    let cols = [];
-    let rows = [];
-    let mouse = { x: -9999, y: -9999, active: false };
-    let rafPending = false;
+      const canvas = document.getElementById("random-grid");
+      const ctx = canvas.getContext("2d");
+      const frame = document.getElementById("interactive-frame");
+      const track = document.getElementById("ribbon-track");
 
-    function randomStep(min, max) {
-      return Math.random() * (max - min) + min;
-    }
+      // الگوی اولیه ثابتی برای جلوگیری از تکثیر چندباره نودها
+      const RAW_TEMPLATE = `<div class="ribbon-text">WATCH&amp;LEARN</div>`;
 
-    function buildGrid(width, height) {
-      cols = [];
-      rows = [];
+      let cols = [], rows = [];
+      let mouse = { x: -9999, y: -9999, active: false };
+      let ribbonVelocity = 50, ribbonVelocityTarget = 50;
+      let ribbonPhase = 0, ribbonUnitSize = 0;
+      let lastTime = performance.now();
 
-      let x = 0;
-      while (x <= width) {
-        cols.push({
-          pos: x,
-          width: Math.random() * 1.2 + 0.2,
-          alpha: Math.random() * 0.12 + 0.04
-        });
-        x += randomStep(38, 72);
+      function buildGrid(w, h) {
+        cols = []; rows = [];
+        let x = 0; while (x <= w) { cols.push({pos: x, width: Math.random()*1.2+0.2, alpha: Math.random()*0.12+0.04}); x += Math.random()*34+38; }
+        let y = 0; while (y <= h) { rows.push({pos: y, width: Math.random()*1.2+0.2, alpha: Math.random()*0.12+0.04}); y += Math.random()*34+38; }
       }
 
-      let y = 0;
-      while (y <= height) {
-        rows.push({
-          pos: y,
-          width: Math.random() * 1.2 + 0.2,
-          alpha: Math.random() * 0.12 + 0.04
-        });
-        y += randomStep(38, 72);
-      }
-    }
-
-    function resizeCanvas() {
-      const dpr = window.devicePixelRatio || 1;
-      const rect = frame.getBoundingClientRect();
-
-      canvas.width = Math.floor(rect.width * dpr);
-      canvas.height = Math.floor(rect.height * dpr);
-      canvas.style.width = rect.width + 'px';
-      canvas.style.height = rect.height + 'px';
-
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      buildGrid(rect.width, rect.height);
-      drawGrid();
-    }
-
-    function drawGrid() {
-      const rect = frame.getBoundingClientRect();
-      const w = rect.width;
-      const h = rect.height;
-
-      ctx.clearRect(0, 0, w, h);
-
-      for (const col of cols) {
-        const dist = Math.abs(mouse.x - col.pos);
-        const boost = mouse.active ? Math.max(0, 1 - dist / 180) : 0;
-        const alpha = Math.min(col.alpha + boost * 0.22, 0.32);
-        const lineW = col.width + boost * 1.4;
-
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(255,255,210,${alpha})`;
-        ctx.lineWidth = lineW;
-        ctx.moveTo(col.pos, 0);
-        ctx.lineTo(col.pos, h);
-        ctx.stroke();
+      function resizeCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = frame.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        buildGrid(rect.width, rect.height);
       }
 
-      for (const row of rows) {
-        const dist = Math.abs(mouse.y - row.pos);
-        const boost = mouse.active ? Math.max(0, 1 - dist / 180) : 0;
-        const alpha = Math.min(row.alpha + boost * 0.22, 0.32);
-        const lineW = row.width + boost * 1.4;
+      function drawGrid() {
+        const { width, height } = frame.getBoundingClientRect();
+        ctx.clearRect(0, 0, width, height);
 
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(255,255,210,${alpha})`;
-        ctx.lineWidth = lineW;
-        ctx.moveTo(0, row.pos);
-        ctx.lineTo(w, row.pos);
-        ctx.stroke();
+        for (let i = 0; i < cols.length; i++) {
+          const col = cols[i];
+          const dist = Math.abs(mouse.x - col.pos);
+          const boost = mouse.active ? Math.max(0, 1 - dist / 180) : 0;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(255,255,210,${Math.min(col.alpha + boost * 0.22, 0.32)})`;
+          ctx.lineWidth = col.width + boost * 1.4;
+          ctx.moveTo(col.pos, 0); ctx.lineTo(col.pos, height);
+          ctx.stroke();
+        }
+
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows[i];
+          const dist = Math.abs(mouse.y - row.pos);
+          const boost = mouse.active ? Math.max(0, 1 - dist / 180) : 0;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(255,255,210,${Math.min(row.alpha + boost * 0.22, 0.32)})`;
+          ctx.lineWidth = row.width + boost * 1.4;
+          ctx.moveTo(0, row.pos); ctx.lineTo(width, row.pos);
+          ctx.stroke();
+        }
       }
-    }
 
-    function scheduleDraw() {
-      if (rafPending) return;
-      rafPending = true;
-      requestAnimationFrame(() => {
+      function setupRibbon() {
+        const isMobile = window.innerWidth <= 960;
+
+        // همیشه ۳ آیتم پاکسازی‌شده رندر می‌شود
+        track.innerHTML = RAW_TEMPLATE.repeat(3);
+
+        const firstItem = track.children[0];
+        const rect = firstItem.getBoundingClientRect();
+        ribbonUnitSize = isMobile ? rect.width : rect.height;
+
+        // محاسبه تعداد کپی‌های لازم بدون باگ تکثیر تصاعدی
+        const parentSize = isMobile ? window.innerWidth : window.innerHeight;
+        const needed = Math.ceil((parentSize * 2) / ribbonUnitSize) + 1;
+        track.innerHTML = RAW_TEMPLATE.repeat(Math.max(needed, 4));
+      }
+
+      // اصلی‌ترین حلقه انیمیشن بهینه‌شده (Single Render Loop)
+      function tick(now) {
+        const delta = Math.min((now - lastTime) / 1000, 0.1);
+        lastTime = now;
+
+        // Lerp مستقیم سرعت جهت حذف Anime.js
+        ribbonVelocity += (ribbonVelocityTarget - ribbonVelocity) * 0.05;
+
+        if (ribbonUnitSize > 0) {
+          ribbonPhase = (ribbonPhase + ribbonVelocity * delta) % ribbonUnitSize;
+          const isMobile = window.innerWidth <= 960;
+          track.style.transform = isMobile 
+            ? `translate3d(-${ribbonPhase.toFixed(2)}px, 0, 0)` 
+            : `translate3d(0, -${ribbonPhase.toFixed(2)}px, 0)`;
+        }
+
         drawGrid();
-        rafPending = false;
+        requestAnimationFrame(tick);
+      }
+
+      // Event Listeners
+      frame.addEventListener("mousemove", (e) => {
+        const r = frame.getBoundingClientRect();
+        mouse.x = e.clientX - r.left;
+        mouse.y = e.clientY - r.top;
+        mouse.active = true;
+        ribbonVelocityTarget = 120;
       });
-    }
 
-    frame.addEventListener('mousemove', (e) => {
-      const rect = frame.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-      mouse.active = true;
-      scheduleDraw();
-    });
-
-    frame.addEventListener('mouseleave', () => {
-      mouse.x = -9999;
-      mouse.y = -9999;
-      mouse.active = false;
-      scheduleDraw();
-    });
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    // ===== RIBBON =====
-    const track = document.getElementById('ribbon-track');
-    track.innerHTML += track.innerHTML;
-
-    function startRibbon() {
-      anime.remove(track);
-
-      const isMobile = window.innerWidth <= 960;
-      const distance = isMobile ? track.scrollWidth / 2 : track.scrollHeight / 2;
-      const pixelsPerSecond = 60;
-      const duration = (distance / pixelsPerSecond) * 1000;
-
-      anime({
-        targets: track,
-        translateY: isMobile ? 0 : [0, '-50%'],
-        translateX: isMobile ? [0, '-50%'] : 0,
-        duration,
-        easing: 'linear',
-        loop: true
+      frame.addEventListener("mouseleave", () => {
+        mouse.active = false;
+        ribbonVelocityTarget = 40;
       });
-    }
 
-    startRibbon();
-    window.addEventListener('resize', startRibbon);
+      window.addEventListener("resize", () => {
+        resizeCanvas();
+        setupRibbon();
+      });
+
+      // Init
+      resizeCanvas();
+      setupRibbon();
+      requestAnimationFrame(tick);
+    })();
   </script>
 </body>
 </html>
